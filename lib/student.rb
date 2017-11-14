@@ -47,4 +47,16 @@ class Student
     Student.new(row[1],row[2],row[0])
   end
 
+  def self.find_by_name(name)
+    sql = <<-SQL
+      SELECT *
+      FROM songs
+      WHERE name = ?
+      LIMIT 1
+      SQL
+      DB[:conn].execute(sql,name).map {|r|
+        self.new_from_db(r)
+      }.first
+  end
+  
 end
